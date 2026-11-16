@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<title>Seal Squad</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div id="stage">
+  <canvas id="game"></canvas>
+  <div id="topButtons">
+    <button id="btnPause" title="Pause (P)">II</button>
+    <button id="btnMute" title="Mute (M)">♪</button>
+  </div>
+</div>
+
+<div id="menu" class="overlay">
+  <div class="panel">
+    <h1>SEAL SQUAD</h1>
+    <p class="sub">Gulf of St. Lawrence · March 1982</p>
+    <div class="intro">
+      <canvas id="hero" width="150" height="170"></canvas>
+      <p>The protest ship is stuck in the ice, but its confrontation team is over the side
+      with cans of green dye, heading for the seal pups. One guy from New York, in a hockey
+      vest and armed with a hockey stick, has other ideas.<br><br>
+      Hop between the ice floes and <b>bonk the protesters</b> before they spray the seals.
+      Keep an eye on the pups too: they get spooked and flop for the water. Stand next to one to calm it down.</p>
+    </div>
+    <div class="diffs">
+      <button data-diff="easy">EASY<small id="best-easy"></small></button>
+      <button data-diff="medium">MEDIUM<small id="best-medium"></small></button>
+      <button data-diff="hard">HARD<small id="best-hard"></small></button>
+    </div>
+    <p class="keys"><b>Move</b> WASD / arrows &nbsp;·&nbsp; <b>Jump</b> Space &nbsp;·&nbsp; <b>Swing</b> J or click &nbsp;·&nbsp; <b>Pause</b> P &nbsp;·&nbsp; <b>Mute</b> M</p>
+    <p class="keys">Pick-ups: hot dog = speed · puck = slapshots · snowflake = freeze the water · coffee = long jump</p>
+  </div>
+</div>
+
+<div id="paused" class="overlay hidden">
+  <div class="panel small">
+    <h2>PAUSED</h2>
+    <button id="btnResume">RESUME</button>
+    <button id="btnQuit">QUIT TO MENU</button>
+  </div>
+</div>
+
+<div id="over" class="overlay hidden">
+  <div class="panel small">
+    <h2>GAME OVER</h2>
+    <p id="overMsg"></p>
+    <p class="big">Score <span id="overScore">0</span></p>
+    <p id="overStats"></p>
+    <button id="btnAgain">PLAY AGAIN</button>
+    <button id="btnMenu">MENU</button>
+  </div>
+</div>
+
+<div id="touch">
+  <div id="stick"><div id="knob"></div></div>
+  <div id="tbuttons">
+    <button id="btnJump">JUMP</button>
+    <button id="btnSwing">SWING</button>
+  </div>
+</div>
+
+<script src="js/config.js"></script>
+<script src="js/audio.js"></script>
+<script src="js/input.js"></script>
+<script src="js/world.js"></script>
+<script src="js/entities.js"></script>
+<script src="js/render.js"></script>
+<script src="js/main.js"></script>
+</body>
+</html>

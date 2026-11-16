@@ -1,0 +1,11 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "seal-squad",
+      "runtimeExecutable": "python3",
+      "runtimeArgs": ["-I", "-c","import http.server,functools,os;http.server.ThreadingHTTPServer(('127.0.0.1',int(os.environ.get('PORT',8123))),functools.partial(http.server.SimpleHTTPRequestHandler,directory='/private/tmp/claude-501/-Users-richie-mcdonough--claude-spares-spare-STwu5O/d38669e0-dc0c-4b0a-af62-bfee7c6bb390/scratchpad/serve')).serve_forever()"],
+      "port": 8123
+    }
+  ]
+}
