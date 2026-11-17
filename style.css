@@ -8,8 +8,7 @@ html, body {
   position: fixed; inset: 0; display: flex; align-items: center; justify-content: center;
 }
 #game {
-  width: min(100vw, calc(100vh * 1.6)); height: min(100vh, calc(100vw / 1.6));
-  display: block; background: #0b2a44; image-rendering: auto;
+  display: block; /* sized by fit() in js/main.js */ background: #0b2a44; image-rendering: auto;
 }
 #topButtons { position: fixed; top: 8px; left: 50%; transform: translateX(-50%); display: flex; gap: 6px; opacity: .7; }
 #topButtons button {
@@ -55,14 +54,14 @@ button { font-family: inherit; }
 #touch { display: none; }
 body.touch #touch { display: block; }
 #stick {
-  position: fixed; left: 18px; bottom: 18px; width: 120px; height: 120px; border-radius: 50%;
+  position: fixed; left: 18px; bottom: calc(18px + env(safe-area-inset-bottom, 0px)); width: 120px; height: 120px; border-radius: 50%;
   background: rgba(255,255,255,.14); border: 2px solid rgba(255,255,255,.4); z-index: 5; touch-action: none;
 }
 #knob {
   position: absolute; left: 35px; top: 35px; width: 50px; height: 50px; border-radius: 50%;
   background: rgba(255,255,255,.55); pointer-events: none;
 }
-#tbuttons { position: fixed; right: 14px; bottom: 18px; display: flex; gap: 10px; z-index: 5; }
+#tbuttons { position: fixed; right: 14px; bottom: calc(18px + env(safe-area-inset-bottom, 0px)); display: flex; gap: 10px; z-index: 5; }
 #tbuttons button {
   width: 78px; height: 78px; border-radius: 50%; border: 2px solid rgba(255,255,255,.6);
   background: rgba(0,56,168,.55); color: #fff; font-weight: bold; font-size: 13px; touch-action: none;
@@ -75,5 +74,5 @@ body.touch #touch { display: block; }
   .panel button { min-width: 96px; padding: 10px 12px; font-size: 16px; }
 }
 @media (orientation: portrait) {
-  #stage { align-items: flex-start; padding-top: 44px; }
+  #stage { align-items: flex-start; }
 }

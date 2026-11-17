@@ -6,8 +6,9 @@
 
   SS.makeFloes = function (diff) {
     const floes = [];
-    const cols = 5, rows = 3;
-    const x0 = 60, x1 = SS.W - 60, y0 = 130, y1 = SS.H - 40;
+    const x0 = 60, x1 = SS.W - 60, y0 = 130, y1 = SS.BOTTOM - 40;
+    const cols = Math.max(2, Math.round((x1 - x0) / 165)), rows = Math.max(2, Math.round((y1 - y0) / 150));
+    const midC = Math.floor(cols / 2), midR = Math.floor(rows / 2);
     const cw = (x1 - x0) / cols, ch = (y1 - y0) / rows;
     for (let r = 0; r < rows; r++) {
       for (let c = 0; c < cols; c++) {
@@ -15,7 +16,7 @@
         for (let i = 0; i < N; i++) pts.push(0.88 + Math.random() * 0.2);
         const hx = x0 + (c + 0.5) * cw + (Math.random() * 20 - 10);
         const hy = y0 + (r + 0.5) * ch + (Math.random() * 14 - 7);
-        const centre = c === 2 && r === 1;
+        const centre = c === midC && r === midR;
         floes.push({
           hx, hy, x: hx, y: hy, dx: 0, dy: 0,
           r: 58 + Math.random() * 12, pts,
@@ -88,7 +89,7 @@
 
   // Walkable ground test (the whole bay counts while the water is frozen).
   SS.isIce = function (g, x, y) {
-    if (x < 16 || x > SS.W - 16 || y < C.TOP || y > SS.H - 12) return false;
+    if (x < 16 || x > SS.W - 16 || y < C.TOP || y > SS.BOTTOM - 12) return false;
     if (g.freeze > 0) return true;
     return !!SS.floeAt(g.floes, x, y);
   };

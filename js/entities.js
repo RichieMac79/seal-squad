@@ -79,7 +79,7 @@
     if (p.jumping) {
       p.jt += dt;
       p.x = Math.max(18, Math.min(SS.W - 18, p.x + p.jvx * dt));
-      p.y = Math.max(C.TOP + 2, Math.min(SS.H - 14, p.y + p.jvy * dt));
+      p.y = Math.max(C.TOP + 2, Math.min(SS.BOTTOM - 14, p.y + p.jvy * dt));
       p.z = Math.sin(Math.PI * Math.min(1, p.jt / C.JUMP_TIME)) * 30;
       if (p.jt >= C.JUMP_TIME) {
         p.jumping = false; p.z = 0;
@@ -127,9 +127,9 @@
     const d = g.diff, w = g.wave;
     let x, y;
     const r = Math.random();
-    if (r < 0.6) { x = rand(330, 630); y = 96; }
-    else if (r < 0.8) { x = 4; y = rand(170, 540); }
-    else { x = SS.W - 4; y = rand(170, 540); }
+    if (r < 0.6) { x = SS.W / 2 + rand(-150, 150); y = 96; }
+    else if (r < 0.8) { x = 4; y = rand(170, SS.BOTTOM - 60); }
+    else { x = SS.W - 4; y = rand(170, SS.BOTTOM - 60); }
     let type = 'normal';
     const t = Math.random();
     if (w >= 4 && t < 0.2) type = 'banner';
@@ -154,7 +154,7 @@
 
   function startLeaving(pr) {
     pr.state = 'leave'; pr.target = null;
-    if (pr.y < 300) { pr.ex = Math.max(330, Math.min(630, pr.x)); pr.ey = 84; }
+    if (pr.y < SS.BOTTOM / 2) { pr.ex = Math.max(SS.W / 2 - 150, Math.min(SS.W / 2 + 150, pr.x)); pr.ey = 84; }
     else { pr.ex = pr.x < SS.W / 2 ? -20 : SS.W + 20; pr.ey = pr.y; }
   }
 

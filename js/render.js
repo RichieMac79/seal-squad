@@ -325,6 +325,7 @@
   // ---------- frame ----------
   SS.render = function (ctx, g, showHud) {
     ctx.save();
+    ctx.translate(0, SS.TOPBAR);
     if (g.shake > 0) ctx.translate((Math.random() - 0.5) * 9, (Math.random() - 0.5) * 9);
     drawWater(ctx, g);
     drawShip(ctx, g);
@@ -362,6 +363,10 @@
     }
     if (g.lostFlash > 0) { ctx.fillStyle = `rgba(80,220,80,${g.lostFlash * 0.25})`; ctx.fillRect(0, 0, SS.W, SS.H); }
     ctx.restore();
+    if (SS.TOPBAR) {
+      ctx.fillStyle = '#071a2b'; ctx.fillRect(0, 0, SS.W, SS.TOPBAR);
+      ctx.fillStyle = 'rgba(127,180,214,0.35)'; ctx.fillRect(0, SS.TOPBAR - 1, SS.W, 1);
+    }
     if (showHud) drawHUD(ctx, g);
   };
 })();

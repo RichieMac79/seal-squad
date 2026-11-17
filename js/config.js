@@ -3,6 +3,24 @@ window.SS = window.SS || {};
 
 SS.W = 960;
 SS.H = 600;
+SS.BOTTOM = 600;         // bottom of the playable area (above the touch controls in portrait)
+SS.TOPBAR = 0;           // height of the HUD strip drawn above the world (portrait only)
+
+// Pick the world size for a viewport: the classic 960x600 in landscape, or a tall
+// 600-wide world that fills the screen in portrait. reservePx is the strip of CSS
+// pixels at the bottom covered by the touch controls. Returns true if anything changed.
+SS.layout = function (vw, vh, reservePx) {
+  const a = vh / Math.max(1, vw), portrait = a >= 1.3;
+  const W = portrait ? 600 : 960;
+  const bar = portrait ? 64 : 0;   // the ship nearly spans a 600-wide world, so the HUD gets its own strip
+  const full = portrait ? Math.round(600 * Math.min(a, 2.3)) : 600;
+  const H = full - bar;
+  const scale = Math.min(vw / W, vh / full);
+  const bottom = portrait ? Math.round(H - (reservePx || 0) / scale) : H;
+  const changed = W !== SS.W || H !== SS.H || bottom !== SS.BOTTOM;
+  SS.W = W; SS.H = H; SS.BOTTOM = bottom; SS.TOPBAR = bar;
+  return changed;
+};
 
 // flee: seconds between a pup bolting for the water; maxFlee: how many can bolt at once
 SS.DIFF = {

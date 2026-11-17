@@ -6,10 +6,28 @@
   const STEP = 1 / 60;
   let g = null, mode = 'menu', diffKey = 'medium', last = 0, acc = 0;
 
-  function resize() {
+  // Choose the world shape for the current viewport (only between games, never mid-game).
+  function relayout() {
+    let reserve = 0;
+    if (document.body.classList.contains('touch')) {
+      const top = $('stick').getBoundingClientRect().top;
+      if (top > 0) reserve = window.innerHeight - top + 8;
+    }
+    return SS.layout(window.innerWidth, window.innerHeight, reserve);
+  }
+  // Scale the canvas to fill as much of the viewport as the world's shape allows.
+  function fit() {
     const dpr = Math.min(2, window.devicePixelRatio || 1);
-    canvas.width = SS.W * dpr; canvas.height = SS.H * dpr;
-    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    const full = SS.H + SS.TOPBAR;
+    const scale = Math.min(window.innerWidth / SS.W, window.innerHeight / full);
+    canvas.style.width = SS.W * scale + 'px'; canvas.style.height = full * scale + 'px';
+    canvas.width = Math.round(SS.W * scale * dpr); canvas.height = Math.round(full * scale * dpr);
+    const k = canvas.width / SS.W;
+    ctx.setTransform(k, 0, 0, k, 0, 0);
+  }
+  function resize() {
+    if (mode === 'menu' && relayout()) g = newGame('medium');
+    fit();
   }
 
   function best(k) { try { return +localStorage.getItem('sealsquad-best-' + k) || 0; } catch (e) { return 0; } }
@@ -87,13 +105,13 @@
   }
 
   function play(key) {
-    diffKey = key; g = newGame(key); mode = 'play'; acc = 0;
+    diffKey = key; relayout(); g = newGame(key); fit(); mode = 'play'; acc = 0;
     SS.input.jump = SS.input.swing = false;
     for (const id of ['menu', 'over', 'paused']) $(id).classList.add('hidden');
     SS.audio.init();
   }
   function toMenu() {
-    mode = 'menu'; g = newGame('medium'); showBests();
+    mode = 'menu'; relayout(); g = newGame('medium'); fit(); showBests();
     $('menu').classList.remove('hidden'); $('over').classList.add('hidden'); $('paused').classList.add('hidden');
   }
   function togglePause() {
@@ -135,7 +153,7 @@
   window.addEventListener('resize', resize);
 
   SS.setupPointer(canvas);
-  resize(); drawHero(); toMenu();
+  drawHero(); toMenu();
   SS.debug = { get g() { return g; }, get mode() { return mode; }, update, play };
   requestAnimationFrame(frame);
 })();
